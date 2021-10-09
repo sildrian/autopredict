@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>My Heading</h2>
+
+<p>Play around with the code and click on the "Run" button to view the result.</p>
+<form>
+  <label for="fname">angka:</label><br>
+  <input type="text" id="fname" name="fname"><br>
+</form>
+<input type="submit" value="Submit" onclick="showInput();">
+
+<!-- <p id="excel"></p> -->
+<p id="dataresultbefore0"></p>
+<p id="dataresultbefore1"></p>
+<p id="dataresultbefore2"></p>
+<p id="dataresultbefore3"></p>
+
+
+<script>
+
+function showInput() {
+  let showdatabasepict = olahdata();
+  // let showklp = kelompok();
+  let result = {}
+  let container = []
+  let tempcheck = []
+  let count = 1
+  let newresultMapArrObj = ''
+  //let number = '2316455183279221491759874281'
+  for(let i=0;i<4;i++){
+    let hit = 1 + parseInt(i);
+    if(typeof(showdatabasepict) != undefined){
+      document.getElementById("dataresultbefore"+i).innerHTML = "The recommended "+ hit +" value is: " + showdatabasepict[i]; 
+    }else{
+      document.getElementById("dataresultbefore"+i).innerHTML = "The recommended value is: nothing"; 
+    }     
+  }
+  return false;
+}
+
+function olahdata(){
+  let alldata = {
+    front:'',
+    back:'',
+    digits:[]
+  }
+  let number = document.getElementById("fname").value;
+  if(number.length != 0){
+    let digits = number.toString().match(/.{1,2}/g).map(Number);
+    alldata.digits = digits
+    // data = '[{"name" : [1,13,25,37,49,61,73,85,97],"value" : "1357"},{"name" : [2,14,26,38,50,62,74,86,98],"value" : "26804"},{"name" : [3,15,27,39,51,63,75,87,99],"value" : "35791"},{"name" : [4,16,28,40,52,64,76,88,0],"value" : "04682"},{"name" : [5,17,29,41,53,65,77,89],"value" : "5719"},{"name" : [6,18,30,42,54,66,78,90],"value" : "0684"},{"name" : [7,19,31,43,55,67,79,91],"value" : "71935"},{"name" : [8,20,32,44,56,68,80,92],"value" : "08246"},{"name" : [9,21,33,45,57,69,81,93],"value" : "9315"},{"name" : [10,22,34,46,58,70,82,94],"value" : "2408"},{"name" : [11,23,35,47,59,71,83,95],"value" : "13579"},{"name" : [12,24,36,48,60,72,84,96],"value" : "2468"}]';
+    data = '[{"name" : [1,13,25,37,49,61,73,85,97],"value" : "13"},{"name" : [2,14,26,38,50,62,74,86,98],"value" : "268"},{"name" : [3,15,27,39,51,63,75,87,99],"value" : "3579"},{"name" : [4,16,28,40,52,64,76,88,0],"value" : "0468"},{"name" : [5,17,29,41,53,65,77,89],"value" : "57"},{"name" : [6,18,30,42,54,66,78,90],"value" : "06"},{"name" : [7,19,31,43,55,67,79,91],"value" : "719"},{"name" : [8,20,32,44,56,68,80,92],"value" : "082"},{"name" : [9,21,33,45,57,69,81,93],"value" : "93"},{"name" : [10,22,34,46,58,70,82,94],"value" : "24"},{"name" : [11,23,35,47,59,71,83,95],"value" : "135"},{"name" : [12,24,36,48,60,72,84,96],"value" : "246"}]';
+    try {
+      var mydata = JSON.parse(data);
+    } catch(e) {
+        alert(e); // error in the above string (in this case, yes)!
+    }
+    for(let i =0;i<mydata.length;i++){
+      let checkfront = mydata[i].name.includes(digits[0]);
+      let checkback = mydata[i].name.includes(digits[1]);
+      if(checkfront == true){
+        alldata.front=mydata[i].value
+      }
+      if(checkback == true){
+        alldata.back=mydata[i].value
+      }
+    }
+    let getKel = kelompok(alldata)
+    return getKel
+  }else{
+    return []
+  }
+}
+
+function kelompok(data){
+  let alldata = []
+  let number = data.back.split('');
+  if(number.length != 0){
+    for(let i=0;i<number.length;i++){
+      switch(number[i]){
+      case '1':
+        alldata.push('16945780')
+        break;
+      case '2':
+        alldata.push('26891705')
+        break;
+      case '3':
+        alldata.push('38167902')
+        break;
+      case '4':
+        alldata.push('49278013')
+        break;
+      case '5':
+        alldata.push('50389124')
+        break;
+      case '6':
+        alldata.push('61490235')
+        break;
+      case '7':
+        alldata.push('72501346')
+        break;
+      case '8':
+        alldata.push('83612457')
+        break;
+      case '9':
+        alldata.push('94723568')
+        break;
+      case '0':
+        alldata.push('05834679')
+        break;
+      // case '10':
+      //   alldata = '03612457'
+      //   break;
+      // case '11':
+      //   alldata = '14723568'
+      //   break;
+      // case '12':
+      //   alldata = '25814679'
+      //   break;
+      default:
+        alldata = []
+        break;
+      }
+    }
+    return alldata;
+  }
+}
+</script>
+
+</body>
+</html>
+
